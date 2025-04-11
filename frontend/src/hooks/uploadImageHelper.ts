@@ -43,6 +43,13 @@ const useUploadImageHelper = () => {
             setIsUploading(false)
         }
     }
+    const handleClear = () => {
+        setFrontImage(null)
+        setBackImage(null)
+        setFrontPreview(null)
+        setBackPreview(null)
+        setResponse(null)
+    }
     return {
         isUploading,
         response,
@@ -56,7 +63,8 @@ const useUploadImageHelper = () => {
         setBackImage,
         setFrontImage,
         setFrontPreview,
-        setBackPreview
+        setBackPreview,
+        handleClear
 
     }
 }

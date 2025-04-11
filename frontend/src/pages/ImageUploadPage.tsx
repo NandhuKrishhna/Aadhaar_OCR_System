@@ -19,7 +19,8 @@ const ImageUploadPage: React.FC = () => {
         setBackImage,
         setFrontImage,
         setFrontPreview,
-        setBackPreview
+        setBackPreview,
+        handleClear
     } = useUploadImageHelper();
 
     return (
@@ -71,6 +72,14 @@ const ImageUploadPage: React.FC = () => {
                                         "Upload Aadhaar"
                                     )}
                                 </button>
+                                {response && (
+                                    <button
+                                        className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 mt-4"
+                                        onClick={() => handleClear()}
+                                    >
+                                        Clear
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
