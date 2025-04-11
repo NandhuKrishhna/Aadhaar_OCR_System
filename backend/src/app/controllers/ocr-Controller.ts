@@ -16,7 +16,7 @@ export class OcrController implements IOcrController {
 
     postAadhaar = catchErrors(async (req: Request, res: Response) => {
         const files = req.files as MulterFiles | undefined;
-        console.log("Files : ", files)
+        // console.log("Files : ", files)
         throwIfInvalid(files, BAD_REQUEST, "No files were uploaded.");
         const frontImage = files['frontImage']?.[0];
         const backImage = files['backImage']?.[0];
@@ -24,11 +24,11 @@ export class OcrController implements IOcrController {
         throwIfInvalid(frontImage || backImage, BAD_REQUEST, "Both front side and backside images are required.");
         const frontImageText = await extractTextFromImage(frontImage.buffer);
         const backImageText = await extractTextFromImage(backImage.buffer);
-        console.log("FrontImageText : ", frontImageText)
-        console.log("BackImageText : ", backImageText)
+        // console.log("FrontImageText : ", frontImageText)
+        // console.log("BackImageText : ", backImageText)
 
         const extractedInfo = extractAadhaarInfo(frontImageText, backImageText);
-        console.log("ExtractedInfo", extractedInfo)
+        // console.log("ExtractedInfo", extractedInfo)
         throwIfInvalid(extractedInfo, BAD_REQUEST, "Unable to extract Aadhaar Info.");
 
         return res.status(OK).json({
