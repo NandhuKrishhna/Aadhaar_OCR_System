@@ -27,7 +27,11 @@ class App {
     }
     private applyMiddleware(): void {
         this.app.use(express.json({ limit: "50mb" }));
-        this.app.use(cors(this.corsOptions));
+        this.app.use(cors({
+            origin: [CORS_URL1, CORS_URL2],
+            credentials: true
+        }));
+
 
         this.app.use(helmet());
         this.app.use(logger("dev"));
