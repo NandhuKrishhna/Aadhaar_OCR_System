@@ -1,9 +1,9 @@
 import type React from "react"
 import useUploadImageHelper from "../hooks/uploadImageHelper"
 import AadhaarInfoCard from "../components/UploadImage";
-import UploadImageMessage from "../components/uploadImageMessage";
 import UploadProcessing from "../components/UploadProcessing";
 import ImageUploader from "../components/ImageUploader";
+import UploadImageMessage from "../components/UploadImageMessage";
 
 
 const ImageUploadPage: React.FC = () => {
@@ -84,7 +84,6 @@ const ImageUploadPage: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* Right Column - Response Display */}
                     <div className="bg-white rounded-lg shadow-md p-6">
                         <h2 className="text-xl font-semibold text-indigo-600 mb-6">Aadhaar Information</h2>
 
