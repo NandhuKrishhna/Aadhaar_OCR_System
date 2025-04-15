@@ -28,7 +28,7 @@ export class OcrController implements IOcrController {
         // console.log("BackImageText : ", backImageText)
 
         const extractedInfo = extractAadhaarInfo(frontImageText, backImageText);
-        // console.log("ExtractedInfo", extractedInfo)
+        console.log("ExtractedInfo", extractedInfo)
         throwIfInvalid(extractedInfo, BAD_REQUEST, "Unable to extract Aadhaar Info.");
 
         return res.status(OK).json({
