@@ -1,5 +1,7 @@
-// ✅ Rename this file: uploadAadhaarImages.ts
 import axios from "axios";
+import toast from "react-hot-toast";
+import { AxiosError } from "axios";
+
 
 const uploadAadhaarImages = async (frontImageFile: File, backImageFile: File) => {
     try {
@@ -15,10 +17,16 @@ const uploadAadhaarImages = async (frontImageFile: File, backImageFile: File) =>
 
         console.log('Response:', response.data);
         return response.data;
-    } catch (error) {
-        console.error('Error uploading images:', error);
-        throw error;
+    } catch (err) {
+        const error = err as AxiosError<{ message: string; status: string }>;
+        if (error.response && error.response.data?.message) {
+            toast.error(error.response.data.message);
+        } else {
+            toast.error("Something went wrong. Please try again.");
+        }
+
     }
 };
 
 export default uploadAadhaarImages;
+
