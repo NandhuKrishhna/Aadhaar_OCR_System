@@ -38,5 +38,4 @@ app.use((req: Request, res: Response) => {
 
 app.use(errorHandler);
 
-// ✅ Export the app (important for Vercel)
 export default app;
