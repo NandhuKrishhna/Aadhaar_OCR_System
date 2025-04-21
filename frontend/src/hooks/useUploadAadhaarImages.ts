@@ -9,7 +9,7 @@ const uploadAadhaarImages = async (frontImageFile: File, backImageFile: File) =>
         formData.append('frontImage', frontImageFile);
         formData.append('backImage', backImageFile);
 
-        const response = await axios.post('http://localhost:5000/api/parsse-aadhar', formData, {
+        const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/api/parsse-aadhar`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
