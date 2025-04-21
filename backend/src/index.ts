@@ -1,5 +1,4 @@
 import express, { Application, Request, Response } from "express";
-import http from "http";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
@@ -7,15 +6,11 @@ import logger from "morgan";
 import route from "./app/routes/routes";
 import { limiter } from "./utils/rateLimiter";
 import errorHandler from "./app/errorHandler";
-import { FRONTEND_URL, PORT } from "./utils/env";
+import { FRONTEND_URL } from "./utils/env";
 
 const app: Application = express();
-const server = http.createServer(app);
-
-
 
 app.use(express.json({ limit: "50mb" }));
-
 app.use(helmet());
 app.use(logger("dev"));
 app.use(cookieParser());
@@ -31,8 +26,8 @@ app.use(
 );
 
 app.options("*", cors());
-app.use("/api", route);
 
+app.use("/api", route);
 
 app.use((req: Request, res: Response) => {
     res.status(404).json({
@@ -43,7 +38,5 @@ app.use((req: Request, res: Response) => {
 
 app.use(errorHandler);
 
-const port = Number(PORT);
-server.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
-});
+// ✅ Export the app (important for Vercel)
+export default app;
