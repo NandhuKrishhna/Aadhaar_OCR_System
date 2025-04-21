@@ -15,6 +15,8 @@ class App {
     public server: http.Server;
     public corsOptions = {
         origin: FRONTEND_URL,
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        allowedHeaders: ["Content-Type", "Authorization"],
         credentials: true,
     };
 
