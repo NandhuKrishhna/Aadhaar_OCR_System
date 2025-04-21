@@ -14,7 +14,7 @@ class App {
     public app: Application;
     public server: http.Server;
     public corsOptions = {
-        origin: FRONTEND_URL,
+        origin: 'https://aadhaar-ocr-system-pjds.vercel.app',
         credentials: true,
     };
 
