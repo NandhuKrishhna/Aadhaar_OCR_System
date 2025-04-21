@@ -13,20 +13,24 @@ const app: Application = express();
 const server = http.createServer(app);
 
 
-const corsOptions = {
-    origin: 'https://aadhaar-ocr-system-bq61.vercel.app',
-    credentials: true,
-};
-
 
 app.use(express.json({ limit: "50mb" }));
-app.use(cors(corsOptions));
+
 app.use(helmet());
 app.use(logger("dev"));
 app.use(cookieParser());
 app.use(limiter);
 
+app.use(
+    cors({
+        origin: FRONTEND_URL,
+        credentials: true,
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+    })
+);
 
+app.options("*", cors());
 app.use("/api", route);
 
 
