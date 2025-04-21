@@ -5,16 +5,16 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import logger from "morgan";
-import { CORS_URL1, CORS_URL2, NODE_ENV } from "./utils/env";
 import route from "./app/routes/routes";
 import { limiter } from "./utils/rateLimiter";
 import errorHandler from "./app/errorHandler";
+import { FRONTEND_URL } from "./utils/env";
 
 class App {
     public app: Application;
     public server: http.Server;
     public corsOptions = {
-        origin: NODE_ENV === "PROD" ? CORS_URL1 : CORS_URL2,
+        origin: FRONTEND_URL,
         credentials: true,
     };
 

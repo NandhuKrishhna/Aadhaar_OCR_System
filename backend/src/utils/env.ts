@@ -10,5 +10,4 @@ const getEnv = (key: string, defaltvalue?: string): string => {
 };
 export const PORT = getEnv("PORT");
 export const NODE_ENV = getEnv("NODE_ENV");
-export const CORS_URL1 = getEnv("CORS_URL1")
-export const CORS_URL2 = getEnv("CORS_URL2")
+export const FRONTEND_URL = getEnv("FRONTEND_URL");
