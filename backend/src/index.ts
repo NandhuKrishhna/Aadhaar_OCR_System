@@ -3,25 +3,20 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { FRONTEND_URL, NODE_ENV, PORT } from "./utils/env";
 import route from "./app/routes/routes";
-import { limiter } from "./utils/rateLimiter";
 import errorHandler from "./app/errorHandler";
 
 const app = express();
 
 // Middleware
-app.use(cors({
-    origin: FRONTEND_URL,
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
-app.options('*', cors({
-    origin: FRONTEND_URL,
-    credentials: true
-}));
+app.use(
+    cors({
+        credentials: true,
+        origin: FRONTEND_URL,
+        methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    })
+);
 app.use(express.json({ limit: "50mb" }));
 app.use(cookieParser());
-app.use(limiter);
 
 // Routes
 app.use("/api", route);
