@@ -16,7 +16,7 @@ class App {
         origin: (origin, callback) => {
             const allowedOrigins = [FRONTEND_URL];
             if (NODE_ENV === "development") {
-                allowedOrigins.push("http://localhost:3000");
+                allowedOrigins.push("http://localhost:5000");
             }
             if (!origin || allowedOrigins.indexOf(origin) !== -1) {
                 callback(null, true);
@@ -39,7 +39,7 @@ class App {
     }
 
     private applyMiddleware(): void {
-        this.app.use(cors(this.corsOptions));
+        this.app.use(cors({ origin: true, credentials: true }));
         this.app.use(express.json({ limit: "50mb" }));
         this.app.use(logger("dev"));
         this.app.use(cookieParser());
