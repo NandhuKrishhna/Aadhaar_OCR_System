@@ -12,7 +12,7 @@ import errorHandler from "./app/errorHandler";
 class App {
     public app: Application;
     public corsOptions = {
-        origin: true,
+        origin: FRONTEND_URL,
         credentials: true,
     };
 
@@ -25,7 +25,7 @@ class App {
 
     private applyMiddleware(): void {
         this.app.use(express.json({ limit: "50mb" }));
-        this.app.use(cors(this.corsOptions));
+        this.app.options("*", cors(this.corsOptions));
         this.app.use(helmet());
         this.app.use(logger("dev"));
         this.app.use(cookieParser());
