@@ -1,23 +1,28 @@
-import { Application, Request, Response } from "express";
+import { Application, Request, Response, NextFunction } from "express";
 import express from "express";
+import http from "http";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import logger from "morgan";
-import { FRONTEND_URL } from "./utils/env";
+import { FRONTEND_URL, NODE_ENV } from "./utils/env";
 import route from "./app/routes/routes";
 import { limiter } from "./utils/rateLimiter";
 import errorHandler from "./app/errorHandler";
 
 class App {
     public app: Application;
+    public server: http.Server;
     public corsOptions = {
-        origin: "*",
+        origin: FRONTEND_URL,
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        allowedHeaders: ["Content-Type", "Authorization"],
         credentials: true,
     };
 
     constructor() {
         this.app = express();
+        this.server = http.createServer(this.app);
         this.applyMiddleware();
         this.registerRoutes();
         this.registerErrorHandler();
@@ -25,11 +30,7 @@ class App {
 
     private applyMiddleware(): void {
         this.app.use(express.json({ limit: "50mb" }));
-        this.app.use(cors({
-            origin: "*",  // Allow all origins
-            credentials: true,  // Allow credentials (cookies, authorization headers)
-        }));
-        this.app.options("*", cors());
+        this.app.use(cors(this.corsOptions));
         this.app.use(helmet());
         this.app.use(logger("dev"));
         this.app.use(cookieParser());
@@ -49,6 +50,12 @@ class App {
 
     private registerErrorHandler(): void {
         this.app.use(errorHandler);
+    }
+
+    public startServer(PORT: number): void {
+        this.server.listen(PORT, () => {
+            console.log(`Server is running at http://localhost:${PORT}`);
+        });
     }
 }
 

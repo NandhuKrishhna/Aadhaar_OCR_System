@@ -1,9 +1,8 @@
-import { VercelRequest, VercelResponse } from "@vercel/node";
-import App from "./app";
 
+import App from "./app";
+import { PORT } from "./utils/env";
+
+const port = Number(PORT)
 const app = new App();
 
-export default (req: VercelRequest, res: VercelResponse) => {
-    // This will handle the request using your Express app.
-    app.app(req, res);
-};
+app.startServer(port)
