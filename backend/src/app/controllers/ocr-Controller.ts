@@ -17,7 +17,7 @@ export class OcrController implements IOcrController {
 
     postAadhaar = catchErrors(async (req: Request, res: Response) => {
         const files = req.files as MulterFiles | undefined;
-        // console.log("Files : ", files)
+        // console.log("Files : ", files);
         throwIfInvalid(files, BAD_REQUEST, "No files were uploaded.");
         const frontImage = files['frontImage']?.[0];
         const backImage = files['backImage']?.[0];

@@ -3,7 +3,6 @@ import express from "express";
 import http from "http";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import helmet from "helmet";
 import logger from "morgan";
 import { FRONTEND_URL, NODE_ENV } from "./utils/env";
 import route from "./app/routes/routes";
@@ -13,11 +12,22 @@ import errorHandler from "./app/errorHandler";
 class App {
     public app: Application;
     public server: http.Server;
-    public corsOptions = {
-        origin: FRONTEND_URL,
-        methods: ["GET", "POST", "PUT", "DELETE"],
-        allowedHeaders: ["Content-Type", "Authorization"],
+    public corsOptions: cors.CorsOptions = {
+        origin: (origin, callback) => {
+            const allowedOrigins = [FRONTEND_URL];
+            if (NODE_ENV === "development") {
+                allowedOrigins.push("http://localhost:3000");
+            }
+            if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+                callback(null, true);
+            } else {
+                callback(new Error("Not allowed by CORS"));
+            }
+        },
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
         credentials: true,
+        optionsSuccessStatus: 200
     };
 
     constructor() {
@@ -29,9 +39,8 @@ class App {
     }
 
     private applyMiddleware(): void {
-        this.app.use(express.json({ limit: "50mb" }));
         this.app.use(cors(this.corsOptions));
-        this.app.use(helmet());
+        this.app.use(express.json({ limit: "50mb" }));
         this.app.use(logger("dev"));
         this.app.use(cookieParser());
         this.app.use(limiter);
