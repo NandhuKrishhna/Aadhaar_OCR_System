@@ -11,9 +11,14 @@ const app = express();
 // Middleware
 app.use(cors({
     origin: FRONTEND_URL,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+app.options('*', cors({
+    origin: FRONTEND_URL,
     credentials: true
 }));
-
 app.use(express.json({ limit: "50mb" }));
 app.use(cookieParser());
 app.use(limiter);
