@@ -25,6 +25,11 @@ app.use(limiter);
 
 // Routes
 app.use("/api", route);
+app.use((req, res, next) => {
+    console.log("Request Path:", req.path);
+    next();
+});
+
 
 app.use((req: Request, res: Response) => {
     res.status(404).json({
