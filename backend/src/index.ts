@@ -6,7 +6,7 @@ import route from "./app/routes/routes";
 import errorHandler from "./app/errorHandler";
 
 const app = express();
-
+console.log(FRONTEND_URL)
 // Middleware
 app.use(
     cors({
